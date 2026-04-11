@@ -2,7 +2,7 @@
 The software is based on ideas in the MIT licensed software 
   "Schrankensteuerung Zustandsautomat Schrankenbewegung"
           Copyright (c) 2025 Albert Messmer
-          but fully rewritten by Andreas Mascheck
+   fully rewritten signal processing by Andreas Mascheck
           under
 
 ## GNU GPL V3
@@ -234,4 +234,4 @@ Timer2 ISR (400 Hz) ↓ Select Channel → Initialize LC Stroke ↓ Analog Compa
 > With 6.8 µH and 47 nF, the frequency is ~280 kHz—still manageable for a 16 MHz ATmega via interrupts. Higher frequencies are not recommended.”  
 > — A. Messmer, 2025
 
-Documentation edited and improved with AI assistance (ChatGPT, OpenAI), 2026
+Documentation edited and improved with AI assistance (ChatGPT, OpenAI, Cloude Haiku 4.5), 2026
