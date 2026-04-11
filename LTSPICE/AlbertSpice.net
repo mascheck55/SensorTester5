@@ -1,0 +1,20 @@
+* C:\users\ama\Documents\Eisenbahn\EX-IOLC_proxy\AlbertSpice.asc
+M1 N006 N007 0 0 FDR4420A
+M2 N006 N004 N001 N001 FDR840P
+V1 N001 N004 PULSE(0 5 1u 0 0 .5u 4u 1)
+V2 N007 0 PULSE(0 4 0 0 0 .5u 1u 1)
+L1 N003 N006 6.8µ Ipk=1.8 Rser=0.060 Rpar=9724.7 Cpar=4.998p
+C1 N003 N006 0.047µ Rser=0.05
+R2 N001 N003 10k
+R3 N003 0 10k
+C2 N003 0 .1µ
+V3 N001 0 5 Rser=0.5
+L2 N002 N005 6.8µ
+R4 N002 N005 10
+.model NMOS NMOS
+.model PMOS PMOS
+.lib C:\users\ama\Documents\LTspiceXVII\lib\cmp\standard.mos
+.tran 120u
+K1 L1 L2 0.03
+.backanno
+.end
