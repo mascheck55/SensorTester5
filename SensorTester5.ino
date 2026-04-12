@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "LC_Sensor.h"
-#define Repeats 5
-#define HOLD 150
+
 
 LC_Sensor mysensor = LC_Sensor();
 
@@ -22,7 +21,7 @@ void setup()
   mysensor.end();
   mysensor.begin(0, 10, 3, Zero,6); // mit neuem Messwert starten
   
-  Serial.println(mysensor.reCalibrate(7));
+  Serial.println(mysensor.reCalibrate(6));
 }
 
 void loop()

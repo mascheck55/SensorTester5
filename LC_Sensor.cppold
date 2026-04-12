@@ -44,7 +44,6 @@ volatile uint8_t referenceChannel = REF_CHANNEL;
 // ============================================================================
 volatile uint16_t signalLevel[MAX_SENSORS];   // Hold counter per channel
 volatile uint8_t triggerCounter[MAX_SENSORS]; // Repetition filter per channel
-volatile uint8_t virtualPort = 0xFF;          // Port like PCF8574 Input
 
 // ============================================================================
 // SIGNAL PROCESSING (Filters & Statistics)
@@ -217,12 +216,6 @@ int LC_Sensor::zero(uint8_t channel)
 bool LC_Sensor::activ(uint8_t channel)
 {
   return (read(channel) > 0);
-}
-
-// ============================================================================
-uint8_t LC_Sensor::virtPort(void)
-{
-  return virtualPort;
 }
 
 // ============================================================================
@@ -530,19 +523,7 @@ void SignalProcessor(uint8_t channel, uint8_t idx)
 
   // Output signal on trigger
   if ((count == triggerRepeat) && (delta < 10))
-  {
     signalLevel[channel] = holdTime;
-  }
-
-  // Output signal on virtual Port
-  if (signalLevel[channel])
-  {
-    virtualPort &= ~(1 << channel);
-  }
-  else
-  {
-    virtualPort |= (1 << channel);
-  }
 }
 
 // ============================================================================

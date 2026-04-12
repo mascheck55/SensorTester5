@@ -92,7 +92,6 @@ public:
     // Sensor Reading
     uint16_t read(uint8_t channel);     // Get signal level (0-holdTime)
     bool activ(uint8_t channel);        // Quick: signal > 0 ?
-    uint8_t virtPort(void);  // Get signal in a Byte
     
     // Configuration & Status
     uint8_t pins(void);                 // Get number of active sensors
