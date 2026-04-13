@@ -24,6 +24,7 @@
 #ifndef LC_SENSOR_H
 #define LC_SENSOR_H
 #include "Arduino.h"
+#include "LC_Sensor_Wire.h"
 
 // ============================================================================
 // SYSTEM CONFIGURATION
@@ -54,7 +55,7 @@ struct ChannelConfig {
     uint8_t type;                  // Channel type (C_LC_SENSOR, etc.)
 };
 
-extern const ChannelConfig channels[] PROGMEM;
+
 
 // ============================================================================
 // SENSOR STATE (exported for monitoring)
@@ -65,6 +66,9 @@ extern volatile uint16_t holdTime;                     // Signal hold time
 extern volatile uint8_t  triggerRepeat;                // Repetition filter count
 extern volatile uint8_t  triggerThreshold;             // Detection threshold
 extern volatile uint8_t  nrSensors;                    // Configured sensor count
+
+extern const ChannelConfig channels[] PROGMEM;
+
 
 // ============================================================================
 // CALIBRATION STATE

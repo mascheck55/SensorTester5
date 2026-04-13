@@ -30,7 +30,34 @@
 #else
 #error "Unsupported board! Add ARDUINO_AVR_* check"
 #endif
-
+// ============================================================================
+// CHANNEL CONFIGURATION
+// ============================================================================
+#ifdef LC_SENSOR_USE_WIRE
+#pragma message "A4-A5 not used"
+const ChannelConfig channels[] PROGMEM = {
+    {&PORTC, &DDRC, (1 << 0), C_LC_SENSOR}, // A0 = PC0
+    {&PORTC, &DDRC, (1 << 1), C_LC_SENSOR}, // A1 = PC1
+    {&PORTC, &DDRC, (1 << 2), C_LC_SENSOR}, // A2 = PC2
+    {&PORTC, &DDRC, (1 << 3), C_LC_SENSOR}, // A3 = PC3
+    {&PORTC, &DDRC, (1 << 4), C_UNUSED}, // A4 = PC4
+    {&PORTC, &DDRC, (1 << 5), C_UNUSED}, // A5 = PC5
+    {&PORTD, &DDRD, (1 << 4), C_LC_SENSOR}, // A6 = PD4
+    {&PORTD, &DDRD, (1 << 3), C_LC_SENSOR}, // A7 = PD3
+};
+#else
+#pragma message "A0-A7 used"
+const ChannelConfig channels[] PROGMEM = {
+    {&PORTC, &DDRC, (1 << 0), C_LC_SENSOR}, // A0 = PC0
+    {&PORTC, &DDRC, (1 << 1), C_LC_SENSOR}, // A1 = PC1
+    {&PORTC, &DDRC, (1 << 2), C_LC_SENSOR}, // A2 = PC2
+    {&PORTC, &DDRC, (1 << 3), C_LC_SENSOR}, // A3 = PC3
+    {&PORTC, &DDRC, (1 << 4), C_LC_SENSOR}, // A4 = PC4
+    {&PORTC, &DDRC, (1 << 5), C_LC_SENSOR}, // A5 = PC5
+    {&PORTD, &DDRD, (1 << 4), C_LC_SENSOR}, // A6 = PD4
+    {&PORTD, &DDRD, (1 << 3), C_LC_SENSOR}, // A7 = PD3
+};
+#endif
 // ============================================================================
 // RUNTIME CONFIGURATION (User Parameters)
 // ============================================================================
@@ -83,19 +110,6 @@ int debugValue = 0;
 volatile SystemState systemState = STATE_CALIBRATION;
 volatile uint8_t calibrationSamples = 0;
 
-// ============================================================================
-// CHANNEL CONFIGURATION (from header)
-// ============================================================================
-const ChannelConfig channels[] PROGMEM = {
-    {&PORTC, &DDRC, (1 << 0), C_LC_SENSOR}, // A0 = PC0
-    {&PORTC, &DDRC, (1 << 1), C_LC_SENSOR}, // A1 = PC1
-    {&PORTC, &DDRC, (1 << 2), C_LC_SENSOR}, // A2 = PC2
-    {&PORTC, &DDRC, (1 << 3), C_LC_SENSOR}, // A3 = PC3
-    {&PORTC, &DDRC, (1 << 4), C_LC_SENSOR}, // A4 = PC4
-    {&PORTC, &DDRC, (1 << 5), C_LC_SENSOR}, // A5 = PC5
-    {&PORTD, &DDRD, (1 << 4), C_LC_SENSOR}, // A6 = PD4
-    {&PORTD, &DDRD, (1 << 3), C_LC_SENSOR}, // A7 = PD3
-};
 
 // ============================================================================
 // PRIVATE FUNCTION DECLARATIONS

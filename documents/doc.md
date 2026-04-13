@@ -57,7 +57,17 @@ bool success = mysensor.begin(uint8_t repeat, uint16_t hold, uint8_t threshold, 
 | `threshold` | 2 | 1-9 | Detection threshold (delta from baseline) |
 | `zero` | 45 | 0-49 | Baseline count (inactive state). 0 = auto-calibrate |
 
-These values can be tuned to reduce noise or adjust sensitivity for specific applications.
+These parameters can be tuned to reduce noise or adjust sensitivity for specific applications.
+
+The parameters work together with a ring buffer that acts as a noise filter. For different model railway gauges, the values need to be adapted to match the speed and size of the trains.
+
+At higher speeds, the signal detection should be more “peaky” (short and pronounced). To achieve this, the coil diameter can be increased to around 8–9 mm and the coil made flatter. This results in a stronger and more distinct signal, allowing (and requiring) a higher detection threshold.
+
+**Recommended Settings** (for model railroad)
+
+| Gauge | Buffer Size | Filter Time | Repeat | Threshold | Hold |
+| N | 32 | 80ms | 3 | 2 | 100 |
+| H0 | 16 | 40ms | 2 | 3 | 200 |
 
 #### Auto-Calibration
 
