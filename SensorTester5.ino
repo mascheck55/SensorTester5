@@ -11,10 +11,24 @@ LC_Sensor mysensor = LC_Sensor(); // Instance of a sensor
 // ============================================================================
 #define I2C_ADDRESS 0x65
 #include <Wire.h> 
+#pragma message "Wire"
 void requestEvent() {Wire.write(mysensor.virtPort());}
 void receiveEvent(int howMany){
   while (Wire.available())
     Wire.read(); // drop everything what is comming
+}
+#endif
+#ifdef LC_SENSOR_USE_WIRE1
+// ============================================================================
+// WIRE CONFIGURATION A4(SDA) A5(SCL) should work like a read only PCF8574
+// ============================================================================
+#define I2C_ADDRESS 0x65
+#include <Wire1.h> 
+#pragma message "Wire1"
+void requestEvent() {Wire1.write(mysensor.virtPort());}
+void receiveEvent(int howMany){
+  while (Wire1.available())
+    Wire1.read(); // drop everything what is comming
 }
 #endif
 // ============================================================================
@@ -28,6 +42,11 @@ void setup()
   Wire.onRequest(requestEvent);
   Wire.onReceive(receiveEvent);
 #endif
+#ifdef LC_SENSOR_USE_WIRE1
+  Wire1.begin(I2C_ADDRESS);
+  Wire1.onRequest(requestEvent);
+  Wire1.onReceive(receiveEvent);
+#endif  
   Serial.begin(115200);
   mysensor.begin(0, 100, 0, 0, 0); // works on A0
   delay(300);

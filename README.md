@@ -28,6 +28,7 @@ This project **requires physical I2C pins**:
 - Newer Nano boards with **ATmega328PB** provide a second I2C interface  
 - Availability of Nano V4 (328PB) may be limited → choose hardware carefully
 - if you do not need A4/A5 you may use it for LC_Sensor
+- I was not able to make it working on an NanoV§(old bootloader) with i2c towards DCC-EX
 >⚠️ the code for Nano V4 was only to compile with:
 
 Arduino IDE Version: 2.3.8
@@ -182,8 +183,16 @@ Timer2 ISR (400 Hz) ↓ Select Channel → Initialize LC Stroke ↓ Analog Compa
 
 1. Connect coils and capacitors as LC resonators between rails.
 2. Connect Arduino Nano (pins as above).
-3. Run SensorTester5 firmware.
-4. Test and calibrate 
+3. Add in the "myAutomation.h" a line regarding the HAL object
+    **HAL(PCF8574, 800,8,0x65)** (works only with Arduino Nano V4 - MC) 
+4. Connect i2C to DCC-EX Command Station
+5. Run SensorTester5 firmware.
+6. Restart DCC-EX (check by command "<D HAL SHOW>")
+
+7. Test and calibrate 
+
+![Alt text](pictures/wire1_works.png)
+- The  PCF8574 is online with 8 pins I2C address 0x65 virtual pins from 800 on
 
 ---
 
