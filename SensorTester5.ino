@@ -4,12 +4,12 @@
 #include "LC_Sensor.h"
 
 LC_Sensor mysensor = LC_Sensor(); // Instance of a sensor
-
+uint8_t v = 0xFF; // all inactive
 #ifdef LC_SENSOR_USE_WIRE
 // ============================================================================
 // WIRE CONFIGURATION A4(SDA) A5(SCL) should work like a read only PCF8574
 // ============================================================================
-#include <Wire.h> 
+#include <Wire.h>
 #pragma message "using Wire"
 #define WIRE Wire
 #endif
@@ -17,24 +17,26 @@ LC_Sensor mysensor = LC_Sensor(); // Instance of a sensor
 // ============================================================================
 // WIRE CONFIGURATION 23(SDA) 24(SCL) should work like a read only PCF8574
 // ============================================================================
-#include <Wire1.h> 
+#include <Wire1.h>
 #pragma message "using Wire1"
 #define WIRE Wire1
 #endif
 // ============================================================================
-#if defined (LC_SENSOR_USE_WIRE) || defined (LC_SENSOR_USE_WIRE1)
+#if defined(LC_SENSOR_USE_WIRE) || defined(LC_SENSOR_USE_WIRE1)
 #define I2C_ADDRESS 0x65
-void requestEvent() {WIRE.write(0xFF);}
-void receiveEvent(int howMany){
+void requestEvent() { WIRE.write(v); }
+void receiveEvent(int howMany)
+{
   while (WIRE.available())
-   WIRE.read(); }// drop everything what is comming}
+    WIRE.read();
+} // drop everything what is comming}
 #endif
 
 void setup()
 {
   // put your setup code here, to run once:
 
-#if defined (LC_SENSOR_USE_WIRE) || defined (LC_SENSOR_USE_WIRE1)
+#if defined(LC_SENSOR_USE_WIRE) || defined(LC_SENSOR_USE_WIRE1)
   WIRE.begin(I2C_ADDRESS);
   WIRE.onRequest(requestEvent);
   WIRE.onReceive(receiveEvent);
@@ -43,14 +45,16 @@ void setup()
   mysensor.begin(0, 100, 0, 0, 0); // works on A0
   delay(300);
   Serial.print("is Sensor running? ");
-  if(mysensor.isRunning())
-  Serial.println("yes");else Serial.println("no");
+  if (mysensor.isRunning())
+    Serial.println("yes");
+  else
+    Serial.println("no");
 }
 
 void loop()
 {
   // put your main code here, to run repeatedly:
-   uint8_t v = mysensor.virtPort();
+  v = mysensor.virtPort();
   if (v != 0xFF) // Logic is like PCF8574 invers
   {
     Serial.print("0x");
