@@ -9,44 +9,36 @@ LC_Sensor mysensor = LC_Sensor(); // Instance of a sensor
 // ============================================================================
 // WIRE CONFIGURATION A4(SDA) A5(SCL) should work like a read only PCF8574
 // ============================================================================
-#define I2C_ADDRESS 0x65
 #include <Wire.h> 
-#pragma message "Wire"
-void requestEvent() {Wire.write(mysensor.virtPort());}
-void receiveEvent(int howMany){
-  while (Wire.available())
-    Wire.read(); // drop everything what is comming
-}
+#pragma message "using Wire"
+#define WIRE Wire
 #endif
 #ifdef LC_SENSOR_USE_WIRE1
 // ============================================================================
-// WIRE CONFIGURATION A4(SDA) A5(SCL) should work like a read only PCF8574
+// WIRE CONFIGURATION 23(SDA) 24(SCL) should work like a read only PCF8574
 // ============================================================================
-#define I2C_ADDRESS 0x65
 #include <Wire1.h> 
-#pragma message "Wire1"
-void requestEvent() {Wire1.write(mysensor.virtPort());}
-void receiveEvent(int howMany){
-  while (Wire1.available())
-    Wire1.read(); // drop everything what is comming
-}
+#pragma message "using Wire1"
+#define WIRE Wire1
 #endif
 // ============================================================================
+#if defined (LC_SENSOR_USE_WIRE) || defined (LC_SENSOR_USE_WIRE1)
+#define I2C_ADDRESS 0x65
+void requestEvent() {WIRE.write(0xFF);}
+void receiveEvent(int howMany){
+  while (WIRE.available())
+   WIRE.read(); }// drop everything what is comming}
+#endif
 
 void setup()
 {
   // put your setup code here, to run once:
 
-#ifdef LC_SENSOR_USE_WIRE
-  Wire.begin(I2C_ADDRESS);
-  Wire.onRequest(requestEvent);
-  Wire.onReceive(receiveEvent);
+#if defined (LC_SENSOR_USE_WIRE) || defined (LC_SENSOR_USE_WIRE1)
+  WIRE.begin(I2C_ADDRESS);
+  WIRE.onRequest(requestEvent);
+  WIRE.onReceive(receiveEvent);
 #endif
-#ifdef LC_SENSOR_USE_WIRE1
-  Wire1.begin(I2C_ADDRESS);
-  Wire1.onRequest(requestEvent);
-  Wire1.onReceive(receiveEvent);
-#endif  
   Serial.begin(115200);
   mysensor.begin(0, 100, 0, 0, 0); // works on A0
   delay(300);
