@@ -10,7 +10,7 @@ uint8_t v = 0xFF;                 // all inactive
 // WIRE CONFIGURATION A4(SDA) A5(SCL) should work like a read only PCF8574
 // ============================================================================
 #include <Wire.h>
-#pragma message "using Wire"
+#pragma message "using Wire on A4 and A5 "
 #define WIRE Wire
 #endif
 #ifdef LC_SENSOR_USE_WIRE1
@@ -18,7 +18,7 @@ uint8_t v = 0xFF;                 // all inactive
 // WIRE CONFIGURATION 23(SDA) 24(SCL) should work like a read only PCF8574
 // ============================================================================
 #include <Wire1.h>
-#pragma message "using Wire1"
+#pragma message "using Wire1 all A0-A7 are available"
 #define WIRE Wire1
 #endif
 // ============================================================================
