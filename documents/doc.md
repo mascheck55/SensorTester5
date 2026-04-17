@@ -2,19 +2,21 @@
 
 ## Abstract
 
-EX-IOLC_proxy is a software implementation based on PeteGSX's EX-IOExpander, designed to process inductive LC sensors for metal detection on model railways. It provides reliable detection of locomotives and wagons with a success rate exceeding 99.9%, using small coils and LC resonators monitored via an Arduino Nano. The system supports sequential sensor measurement, simple I2C interfacing, and flexible experimental configurations, offering a practical and noise-robust solution for modern model railway automation.
+This example software is written for using it together with the DCC-EX Command Station. It provides reliable detection of locomotives and wagons with a success rate exceeding 99.9%, using small coils and LC resonators monitored via an Arduino Nano. The system supports sequential sensor measurement, simple I2C interfacing, and flexible experimental configurations, offering a practical and noise-robust solution for model railway automation.
 
 ---
 
 ## Purpose
 
-This document describes the **EX-IOLC_proxy** program, a modification of PeteGSX's **EX-IOExpander**, designed to process inductive LC (inductor-capacitor) sensors for detecting metal objects on model railways.
+This document describes the **Example Program** designed to process inductive LC (inductor-capacitor) sensors for detecting metal objects on model railways.
 
 The program operates reliably with a detection rate exceeding **99.9%**. Feedback from users regarding practical applications and improvements is welcome.
 
-**Repository:** [EX-IOLC_proxy on GitHub](https://github.com/mascheck55/EX-IOLC_proxy)
+**Repository:** [SensorTester5 on GitHub](https://github.com/mascheck55/SensorTester5)
 
 For the time being only SensorTester5 is ready for individual tests
+
+---
 ---
 
 ## Technical Concept
@@ -66,8 +68,10 @@ At higher speeds, the signal detection should be more “peaky” (short and pro
 **Recommended Settings** (for model railroad)
 
 | Gauge | Buffer Size | Filter Time | Repeat | Threshold | Hold |
+|-------|-------------|-------------|--------|-----------|------|
 | N | 32 | 80ms | 3 | 2 | 100 |
 | H0 | 16 | 40ms | 2 | 3 | 200 |
+
 
 #### Auto-Calibration
 

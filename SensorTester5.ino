@@ -4,7 +4,7 @@
 #include "LC_Sensor.h"
 
 LC_Sensor mysensor = LC_Sensor(); // Instance of a sensor
-uint8_t v = 0xFF; // all inactive
+uint8_t v = 0xFF;                 // all inactive
 #ifdef LC_SENSOR_USE_WIRE
 // ============================================================================
 // WIRE CONFIGURATION A4(SDA) A5(SCL) should work like a read only PCF8574
@@ -41,14 +41,31 @@ void setup()
   WIRE.onRequest(requestEvent);
   WIRE.onReceive(receiveEvent);
 #endif
+#define TEST 0   // if 2 calibration works on A2
+#define MYZERO 0 // if == 0 Autocalibration
   Serial.begin(115200);
-  mysensor.begin(0, 100, 0, 0, 0); // works on A0
+  mysensor.begin(0, 100, 0, 0, TEST); // works on A0
   delay(300);
   Serial.print("is Sensor running? ");
   if (mysensor.isRunning())
     Serial.println("yes");
   else
     Serial.println("no");
+  if (MYZERO == 0)
+  {
+    Serial.print("calibrated on A");
+    Serial.print(TEST);
+    Serial.print(" with ");
+    Serial.print(mysensor.zero(TEST));
+    Serial.println(" zero counts");
+  }
+  else
+  {
+    Serial.print("Fix calibration with MYZERO");
+    Serial.print(MYZERO);
+    Serial.println(" if sensors permanent active ");
+    Serial.println(" your MYZERO might be to high ");
+  }
 }
 
 void loop()
